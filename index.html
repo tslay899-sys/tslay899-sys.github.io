@@ -1,9 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的个人网站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成长日志 & 每日省思</title>
+    <style>
+        /* 基础样式重置与优雅的深色背景，适合静心思考 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        header h1 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* 时间轴样式 */
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 30px;
+            border-left: 2px solid #3b82f6; /* 蓝色的时间轴主线 */
+        }
+
+        .log-item {
+            position: relative;
+            margin-bottom: 40px;
+            background: #262626;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .log-item:hover {
+            transform: translateX(5px); /* 鼠标悬停微调，增加交互感 */
+        }
+
+        /* 时间轴圆点 */
+        .log-item::before {
+            content: '';
+            position: absolute;
+            left: -41px;
+            top: 24px;
+            width: 10px;
+            height: 10px;
+            background-color: #3b82f6;
+            border: 4px solid #1a1a1a;
+            border-radius: 50%;
+        }
+
+        .log-date {
+            font-weight: bold;
+            color: #3b82f6;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .log-section {
+            margin-top: 12px;
+        }
+
+        .log-section h3 {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .log-section p {
+            margin: 0;
+            color: #ccc;
+            white-space: pre-line; /* 保留换行符 */
+        }
+
+        /* 鞭策格言/警句样式 */
+        .motto {
+            color: #f59e0b; /* 醒目的琥珀色 */
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-    <h1>你好，世界！这是我的 GitHub 网页。</h1>
+
+    <header>
+        <h1>行而不辍，履践致远</h1>
+        <p>“每日自省，知微见著。” —— 记录工作、所思与自我鞭策</p>
+    </header>
+
+    <div class="timeline" id="log-container"></div>
+
+    <script>
+        // ==========================================
+        // 核心数据区：你以后每天只需要在这里添加新数据即可
+        // 注意：新的一天请放在数组的最前面（最上方）
+        // ==========================================
+        const dailyLogs = [
+            {
+                date: "2026年06月07日",
+                work: "完成了个人网站的架构重构，搭建了基于时间轴的日志流系统。梳理了本周的实验仿真数据。",
+                thought: "技术工具的迭代是为了提高效率，但核心还在于使用工具的人是否维持了专注。不要在纷繁的配置中迷失了真正的前进方向。",
+                motto: "行百里者半九十，保持节奏，不要在看似平稳的阶段松懈。"
+            },
+            {
+                date: "2026年06月06日",
+                work: "阅读了3篇关于高压功率器件热安全工作区（Thermal SOA）的经典文献，并做好了Obsidian笔记分类。",
+                thought: "师哥说的没错，底层概念的扎实程度决定了仿真调试时的敏感度。今天在看格子划分（Mesh）对收敛性的影响时有了新的理解。",
+                motto: "克制浮躁，沉下心去啃硬骨头。"
+            }
+        ];
+
+        // ==========================================
+        // 渲染逻辑：自动将上面的数据转换成网页HTML
+        // ==========================================
+        const container = document.getElementById('log-container');
+        
+        dailyLogs.forEach(log => {
+            const logItem = document.createElement('div');
+            logItem.className = 'log-item';
+            
+            logItem.innerHTML = `
+                <div class="log-date">${log.date}</div>
+                
+                <div class="log-section">
+                    <h3>💻 今日工作</h3>
+                    <p>${log.work}</p>
+                </div>
+                
+                <div class="log-section">
+                    <h3>💡 所思所感</h3>
+                    <p>${log.thought}</p>
+                </div>
+                
+                <div class="log-section">
+                    <h3>🔥 自我鞭策</h3>
+                    <p class="motto">${log.motto}</p>
+                </div>
+            `;
+            
+            container.appendChild(logItem);
+        });
+    </script>
+
 </body>
 </html>
