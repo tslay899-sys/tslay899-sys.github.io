@@ -2,6 +2,22 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "⓪ 首次登录 GitHub",
+      "type": "process",
+      "command": "git",
+      "args": [
+        "credential-manager",
+        "github",
+        "login",
+        "--browser",
+        "--username",
+        "tslay899-sys",
+        "--force"
+      ],
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
       "label": "① 新建今天的学习记录",
       "type": "process",
       "command": "powershell.exe",
