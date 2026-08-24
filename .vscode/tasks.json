@@ -6,6 +6,10 @@
       "type": "process",
       "command": "git",
       "args": [
+        "-c",
+        "credential.credentialStore=dpapi",
+        "-c",
+        "http.sslVerify=true",
         "credential-manager",
         "github",
         "login",
@@ -14,6 +18,7 @@
         "tslay899-sys",
         "--force"
       ],
+      "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": [],
       "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
     },
