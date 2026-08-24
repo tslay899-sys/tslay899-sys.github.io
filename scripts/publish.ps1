@@ -2,6 +2,13 @@
 $projectRoot = Split-Path -Parent $PSScriptRoot
 
 Set-Location $projectRoot
+
+# Use the Windows desktop TLS session and the encrypted DPAPI credential store.
+# This avoids crashes seen with the OpenSSL helper in some Git for Windows builds.
+git config http.sslBackend schannel
+git config http.sslVerify true
+git config credential.credentialStore dpapi
+
 & (Join-Path $PSScriptRoot 'build.ps1') -ProjectRoot $projectRoot
 
 git diff --check
