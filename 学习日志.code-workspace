@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "学习日志网站",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.encoding": "utf8",
+    "git.autofetch": true,
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
+  }
+}

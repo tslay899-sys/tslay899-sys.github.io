@@ -1,166 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成长日志 & 每日省思</title>
-    <style>
-        /* 基础样式重置与优雅的深色背景，适合静心思考 */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            line-height: 1.7;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 0;
-            border-bottom: 1px solid #333;
-        }
-
-        header h1 {
-            color: #ffffff;
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #888;
-            font-style: italic;
-        }
-
-        /* 时间轴样式 */
-        .timeline {
-            position: relative;
-            margin: 40px 0;
-            padding-left: 30px;
-            border-left: 2px solid #3b82f6; /* 蓝色的时间轴主线 */
-        }
-
-        .log-item {
-            position: relative;
-            margin-bottom: 40px;
-            background: #262626;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
-        }
-
-        .log-item:hover {
-            transform: translateX(5px); /* 鼠标悬停微调，增加交互感 */
-        }
-
-        /* 时间轴圆点 */
-        .log-item::before {
-            content: '';
-            position: absolute;
-            left: -41px;
-            top: 24px;
-            width: 10px;
-            height: 10px;
-            background-color: #3b82f6;
-            border: 4px solid #1a1a1a;
-            border-radius: 50%;
-        }
-
-        .log-date {
-            font-weight: bold;
-            color: #3b82f6;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .log-section {
-            margin-top: 12px;
-        }
-
-        .log-section h3 {
-            font-size: 0.95rem;
-            color: #aaa;
-            margin: 0 0 5px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .log-section p {
-            margin: 0;
-            color: #ccc;
-            white-space: pre-line; /* 保留换行符 */
-        }
-
-        /* 鞭策格言/警句样式 */
-        .motto {
-            color: #f59e0b; /* 醒目的琥珀色 */
-            font-weight: 500;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="记录每天的学习、思考与下一步行动。">
+  <meta name="color-scheme" content="light dark">
+  <title>行而不辍｜学习日志</title>
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#logs">跳到学习记录</a>
 
-    <header>
-        <h1>行而不辍，履践致远</h1>
-        <p>“每日自省，知微见著。” —— 记录工作、所思与自我鞭策</p>
-    </header>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="主导航">
+      <a class="brand" href="./" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true">行</span>
+        <span>学习日志</span>
+      </a>
+      <button class="theme-button" id="theme-button" type="button" aria-label="切换明暗主题">
+        <span aria-hidden="true" id="theme-icon">◐</span>
+        <span class="theme-label">切换主题</span>
+      </button>
+    </nav>
 
-    <div class="timeline" id="log-container"></div>
+    <div class="hero shell">
+      <p class="eyebrow">DAILY LEARNING JOURNAL</p>
+      <h1>行而不辍，<span>未来可期。</span></h1>
+      <p class="hero-copy">把每天学到的东西留下来，让微小的进步清晰可见。</p>
+      <div class="hero-meta" aria-label="日志概览">
+        <div><strong id="total-count">0</strong><span>篇记录</span></div>
+        <div><strong id="streak-count">0</strong><span>天连续记录</span></div>
+        <div><strong id="latest-date">—</strong><span>最近更新</span></div>
+      </div>
+    </div>
+  </header>
 
-    <script>
-        // ==========================================
-        // 核心数据区：你以后每天只需要在这里添加新数据即可
-        // 注意：新的一天请放在数组的最前面（最上方）
-        // ==========================================
-        const dailyLogs = [
-            {
-                date: "2026年06月08日",
-                work: `今日继续优化个人网站功能。拒绝了网上的流氓广告平台，成功走通了本地媒体文件离线加载流。今日核心力量训练已打卡。
-                <img src="media/my-workout.jpg" style="max-width:100%; border-radius:8px; margin-top:12px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">`,
-                thought: "保持专注，排除外界噪音。互联网上充满了诱导你消费和分心的陷阱，构建属于自己的、纯粹的代码世界才是最安全的数字避难所。",
-                motto: "心不动，则万物皆静。拒绝无意义的消耗。"
-            }, // 👈 就是这个逗号，千万不能丢！
-            {
-                date: "2026年06月07日",
-                work: "完成了个人网站的架构重构，搭建了基于时间轴的日志流系统。师哥布置的kpi[待完成]。",
-                thought: "不要迷失自己，我是我自己的最大支持者，最后的这段时光由我陪自己走下去。",
-                motto: "种一棵树最好的时间是十年前，其次是现在。"
-            }
-        ];
+  <main class="shell page-layout">
+    <aside class="side-panel" aria-label="日志筛选">
+      <div class="panel-heading">
+        <p class="eyebrow">ARCHIVE</p>
+        <h2>学习档案</h2>
+      </div>
+      <label class="search-box" for="search-input">
+        <span aria-hidden="true">⌕</span>
+        <input id="search-input" type="search" placeholder="搜索内容或标签" autocomplete="off">
+      </label>
+      <div class="filter-group">
+        <p>按标签浏览</p>
+        <div class="tag-filters" id="tag-filters"></div>
+      </div>
+      <p class="side-note">持续记录，比偶尔完美更重要。</p>
+    </aside>
 
-        // ==========================================
-        // 渲染逻辑：自动将上面的数据转换成网页HTML
-        // ==========================================
-        const container = document.getElementById('log-container');
-        
-        dailyLogs.forEach(log => {
-            const logItem = document.createElement('div');
-            logItem.className = 'log-item';
-            
-            logItem.innerHTML = `
-                <div class="log-date">${log.date}</div>
-                
-                <div class="log-section">
-                    <h3>💻 今日工作</h3>
-                    <p>${log.work}</p>
-                </div>
-                
-                <div class="log-section">
-                    <h3>💡 所思所感</h3>
-                    <p>${log.thought}</p>
-                </div>
-                
-                <div class="log-section">
-                    <h3>🔥 自我鞭策</h3>
-                    <p class="motto">${log.motto}</p>
-                </div>
-            `;
-            
-            container.appendChild(logItem);
-        });
-    </script>
+    <section class="log-section" id="logs" aria-labelledby="logs-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LATEST NOTES</p>
+          <h2 id="logs-title">最近记录</h2>
+        </div>
+        <p id="result-count" aria-live="polite"></p>
+      </div>
 
+      <div class="timeline" id="log-container"></div>
+      <div class="empty-state" id="empty-state" hidden>
+        <span aria-hidden="true">⌕</span>
+        <h3>没有找到相关记录</h3>
+        <p>换一个关键词或标签试试。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer shell">
+    <p>每天进步一点点。</p>
+    <p>© <span id="current-year"></span> 学习日志</p>
+  </footer>
+
+  <script src="data/logs.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>
