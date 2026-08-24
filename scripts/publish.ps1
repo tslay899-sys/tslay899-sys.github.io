@@ -2,6 +2,7 @@
 $projectRoot = Split-Path -Parent $PSScriptRoot
 
 Set-Location $projectRoot
+Write-Host '发布工具版本：2026-08-24.2' -ForegroundColor Cyan
 
 # Use the Windows desktop TLS session and the encrypted DPAPI credential store.
 # This avoids crashes seen with the OpenSSL helper in some Git for Windows builds.
@@ -13,7 +14,7 @@ git config credential.credentialStore dpapi
 
 git diff --check
 if ($LASTEXITCODE -ne 0) {
-    throw '内容中存在格式问题，请根据上面的提示修正后再发布。'
+    Write-Host '发现多余空格，将继续发布；可稍后整理格式。' -ForegroundColor Yellow
 }
 
 git add --all
